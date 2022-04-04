@@ -48,3 +48,10 @@ test('Should update a books', async function () {
     expect(updatedBook.sinopse).toBe(book.sinopse)
     await booksService.deleteBook(book.id)
 })
+
+test('Should update a books', async function () {
+    const book = await booksService.saveBook(createBook())
+    await request(`http://localhost:3000/books/${book.id}`, 'delete')
+    const books = await booksService.getBooks()
+    expect(books).toHaveLength(0)
+})

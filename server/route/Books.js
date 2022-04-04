@@ -19,8 +19,10 @@ router.put('/books/:id', async function (req, res){
     await booksService.updateBook(req.params.id, book)
     res.end()
 })
-router.delete('/books/:id', async function (req, res){
 
+router.delete('/books/:id', async function (req, res){
+    await booksService.deleteBook(req.params.id)
+    res.end()
 })
 
 module.exports = router
