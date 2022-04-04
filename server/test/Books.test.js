@@ -38,22 +38,24 @@ test('Should save books', async function () {
     await booksService.deleteBook(book.id)
 })
 
-test('Should update a books', async function () {
+test('Should update a book', async function () {
     const book = await booksService.saveBook(createBook())
     book.title = faker.animal.type(),
     book.sinopse = faker.lorem.paragraph(),
     book.author = faker.name.findName(),
     book.ano_pub = faker.date.past()
-    await request(`http://localhost:3000/books/${book.id}`, 'put', book)
+    const response = await request(`http://localhost:3000/books/${book.id}`, 'put', book)
+    expect(response.status).toBe(204)
     const updatedBook = await booksService.getBook(book.id)
     expect(updatedBook.title).toBe(book.title)
     expect(updatedBook.sinopse).toBe(book.sinopse)
     await booksService.deleteBook(book.id)
 })
 
-test('Should update a books', async function () {
+test('Should delete a book', async function () {
     const book = await booksService.saveBook(createBook())
-    await request(`http://localhost:3000/books/${book.id}`, 'delete')
+    const response = await request(`http://localhost:3000/books/${book.id}`, 'delete')
+    expect(response.status).toBe(204)
     const books = await booksService.getBooks()
     expect(books).toHaveLength(0)
 })

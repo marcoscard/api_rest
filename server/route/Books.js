@@ -17,12 +17,12 @@ router.post('/books', async function (req, res){
 router.put('/books/:id', async function (req, res){
     const book = req.body
     await booksService.updateBook(req.params.id, book)
-    res.end()
+    res.status(204).end()
 })
 
 router.delete('/books/:id', async function (req, res){
     await booksService.deleteBook(req.params.id)
-    res.end()
+    res.status(204).end()
 })
 
 module.exports = router
