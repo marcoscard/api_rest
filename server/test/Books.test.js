@@ -31,6 +31,7 @@ test('Should get books', async function () {
 test('Should save books', async function () {
     const data = createBook()
     const response = await request('http://localhost:3000/books', 'post', data)
+    expect(response.status).toBe(201)
     const book = response.data
     expect(book.title).toBe(data.title)
     expect(book.sinopse).toBe(data.sinopse)

@@ -12,7 +12,7 @@ router.get('/books/:id', async function (req, res){
 router.post('/books', async function (req, res){
     const book = req.body
     const newBook = await booksService.saveBook(book)
-    res.json(newBook)
+    res.status(201).json(newBook)
 })
 router.put('/books/:id', async function (req, res){
     const book = req.body
