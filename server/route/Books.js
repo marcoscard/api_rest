@@ -13,7 +13,11 @@ router.post('/books', async function (req, res){
         const newBook = await booksService.saveBook(book)
         res.status(201).json(newBook)
     } catch (e) {
-        res.status(409).send(e.message)
+        if (e.message === 'Book already exists') {
+            res.status(409).send(e.message)
+        } else {
+            res.status(500).send(e.message)
+        }
     }
 })
 router.put('/books/:id', async function (req, res){
@@ -22,13 +26,25 @@ router.put('/books/:id', async function (req, res){
         await booksService.updateBook(req.params.id, book)
         res.status(204).end()
     } catch (e) {
-        res.status(404).send(e.message)
+        if (e.message === 'Post not found') {
+            res.status(404).send(e.message)
+        } else {
+            res.status(500).send(e.message)
+        }
     }
 })
 
 router.delete('/books/:id', async function (req, res){
-    await booksService.deleteBook(req.params.id)
-    res.status(204).end()
+    try {
+        await booksService.deleteBook(req.params.id)
+        res.status(204).end()
+    } catch (e) {
+        if (e.message === 'Post not found') {
+            res.status(404).send(e.message)
+        } else {
+            res.status(500).send(e.message)
+        }        
+    }
 })
 
 module.exports = router

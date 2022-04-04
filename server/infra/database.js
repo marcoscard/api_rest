@@ -3,7 +3,7 @@ const db = pgp({
     user: 'admin',
     password: '1234',
     host: 'localhost',
-    port: 5432,
+    port: 5433,
     database: 'shelf'
 })
 
