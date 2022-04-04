@@ -36,16 +36,14 @@ test('Should save books', async function () {
     await booksService.deleteBook(book.id)
 })
 
-test.only('Should update a books', async function () {
+test('Should update a books', async function () {
     const book = await booksService.saveBook(createBook())
-    book = {
-        title: faker.animal.type(),
-        sinopse: faker.lorem.paragraph(),
-        author: faker.name.findName(),
-        ano_pub: faker.date.past()
-    }
-    await request(`http://localhost:3000/books${book.id}`, 'put', book)
-    const updatedBook = await booksService.getBooks(book.id)
+    book.title = faker.animal.type(),
+    book.sinopse = faker.lorem.paragraph(),
+    book.author = faker.name.findName(),
+    book.ano_pub = faker.date.past()
+    await request(`http://localhost:3000/books/${book.id}`, 'put', book)
+    const updatedBook = await booksService.getBook(book.id)
     expect(updatedBook.title).toBe(book.title)
     expect(updatedBook.sinopse).toBe(book.sinopse)
     await booksService.deleteBook(book.id)
