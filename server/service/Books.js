@@ -10,7 +10,9 @@ exports.getBook = async function (id) {
     return book
 }
 
-exports.saveBook = function (book) {
+exports.saveBook = async function (book) {
+    const existingBook = await booksData.getBookByTitle(book.title)
+    if (existingBook) throw new Error('Book already exists')
     return booksData.saveBook(book)
 }
 

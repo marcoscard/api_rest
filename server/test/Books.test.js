@@ -38,6 +38,15 @@ test('Should save books', async function () {
     await booksService.deleteBook(book.id)
 })
 
+test('Should not save books', async function () {
+    const data = createBook()
+    const response1 = await request('http://localhost:3000/books', 'post', data)
+    const response2 = await request('http://localhost:3000/books', 'post', data)
+    expect(response2.status).toBe(409)
+    const book = response1.data
+    await booksService.deleteBook(book.id)
+})
+
 test('Should update a book', async function () {
     const book = await booksService.saveBook(createBook())
     book.title = faker.animal.type(),

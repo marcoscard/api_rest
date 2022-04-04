@@ -6,13 +6,15 @@ router.get('/books', async function (req, res){
     const books = await booksService.getBooks()
     res.json(books)
 })
-router.get('/books/:id', async function (req, res){
 
-})
 router.post('/books', async function (req, res){
     const book = req.body
-    const newBook = await booksService.saveBook(book)
-    res.status(201).json(newBook)
+    try {
+        const newBook = await booksService.saveBook(book)
+        res.status(201).json(newBook)
+    } catch (e) {
+        res.status(409).send(e.message)
+    }
 })
 router.put('/books/:id', async function (req, res){
     const book = req.body
