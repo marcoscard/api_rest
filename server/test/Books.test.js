@@ -20,6 +20,7 @@ test('Should get books', async function () {
     const book2 = await booksService.saveBook(createBook())
     const book3 = await booksService.saveBook(createBook())
     const response = await request('http://localhost:3000/books', 'get')
+    expect(response.status).toBe(200)
     const books = response.data
     expect(books).toHaveLength(3)
     await booksService.deleteBook(book1.id)
