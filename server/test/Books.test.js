@@ -12,7 +12,7 @@ const createBook = function () {
 }
 
 const request = function (url, method, data) {
-    return axios({ url, method, data })
+    return axios({ url, method, data, validateStatus: false })
 }
 
 test('Should get books', async function () {
@@ -50,6 +50,14 @@ test('Should update a book', async function () {
     expect(updatedBook.title).toBe(book.title)
     expect(updatedBook.sinopse).toBe(book.sinopse)
     await booksService.deleteBook(book.id)
+})
+
+test('Should not update a book', async function () {
+    const book = {
+        id: 1
+    }
+    const response = await request(`http://localhost:3000/books/${book.id}`, 'put', book)
+    expect(response.status).toBe(404)
 })
 
 test('Should delete a book', async function () {

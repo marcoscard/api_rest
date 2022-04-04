@@ -16,8 +16,12 @@ router.post('/books', async function (req, res){
 })
 router.put('/books/:id', async function (req, res){
     const book = req.body
-    await booksService.updateBook(req.params.id, book)
-    res.status(204).end()
+    try {
+        await booksService.updateBook(req.params.id, book)
+        res.status(204).end()
+    } catch (e) {
+        res.status(404).send(e.message)
+    }
 })
 
 router.delete('/books/:id', async function (req, res){
